@@ -1,0 +1,19 @@
+    <header>
+        <nav>
+            <ul class="nav nav-pills">
+                <li class="nav-item">
+                    <a href="{{ url_for('index') }}" class="nav-link {% if actNav=='index' %}active{% endif %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url_for('register') }}" class="nav-link {% if actNav=='register' %}active{% endif %}">Register</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url_for('tracker') }}" class="nav-link {% if actNav=='tracker' %}active{% endif %}">Tracker</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url_for('logout') }}" class="nav-link {% if actNav=='logout' %}active{% endif %}">logout</a>
+                </li>
+            </ul>
+        </nav>
+        <hr style="clear:both">
+    </header>

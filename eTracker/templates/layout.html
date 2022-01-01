@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="En">
+<head>
+    <title>Rhino</title>
+    {% include "includes/links.html" %}
+</head>
+<body>
+
+<div class="container-fluid text-center top-container">
+    <img src="{{ url_for('static', filename='img/rhino.png') }}" alt="🦏" width="200" height="200">
+</div>
+<div class="container">
+    {% include "includes/nav.html" %}
+    {% include "includes/message.html" %}
+    
+    {% block content %}
+    {% endblock %}
+</div>
+
+{% include "includes/footer.html" %}
+</body>
+</html>

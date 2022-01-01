@@ -1,0 +1,38 @@
+
+    {% extends "layout.html" %}
+   
+    {% block content %}
+
+    <div class="container">
+        <form name="tracker" action="" method="POST" novalidate>
+             <fieldset class="form-group">
+                    <legend>{{ title }}</legend>
+                    {{ form.hidden_tag() }}
+                    <p>
+                        {{ form.receiver.label }}<br>
+                        {{ form.receiver }}
+                        {% for error in form.receiver.errors %}
+                            <span class="error-message">{{ error }}</span>
+                        {% endfor %}
+                    </p>
+                    <p>
+                        {{ form.subject.label }}<br>
+                        {{ form.subject }}
+                        {% for error in form.subject.errors %}
+                            <span class="error-message">{{ error }}</span>
+                        {% endfor %}
+                    </p>
+                    <p>
+                        {{ form.tags.label }}<br>
+                        {{ form.tags() }}
+                        {% for error in form.tags.errors %}
+                            <span class="error-message">{{ error }}</span>
+                        {% endfor %}
+                    </p>
+                    <p>
+                        {{ form.submit() }}
+                    </p>
+                </fieldset>
+        </form>
+    </div>
+    {% endblock %}
