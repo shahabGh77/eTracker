@@ -23,9 +23,14 @@ def redirect_back(endpoint, **values):
 
 
 def logInf():
+    if request.headers.getlist("X-Forwarded-For"):
+        ip = request.headers.getlist("X-Forwarded-For")[0]
+    else:
+        ip = request.remote_addr
+
     return {
         'timestamp_utc': datetime.utcnow().timestamp(),
-        'ip': request.remote_addr,
+        'ip': ip,
         'os': request.user_agent.platform,
         'browser': request.user_agent.browser,
         'v': request.user_agent.version,
