@@ -1,3 +1,4 @@
+import re
 from eTracker import app, db, captcha, login_manager
 from flask import request, jsonify, render_template, flash, redirect, url_for, send_file, Markup, abort
 from flask_login import login_required, login_user, logout_user, current_user
@@ -8,7 +9,6 @@ from .util import is_safe_url, logInf
 import pytracking
 import io
 
-tracking_url = 'http://127.0.0.1:5000/trck/img/'
 
 
 @login_manager.user_loader
@@ -91,18 +91,23 @@ def tracker():
         )
         s.save()
         open_tracking_url = pytracking.get_open_tracking_url(
-            {"LID": s.link_id}, base_open_tracking_url=tracking_url,
+            {"LID": s.link_id}, base_open_tracking_url=request.host_url + url_for('img', hstr=""),
             encryption_bytestring_key=app.config['TRACK_KEY']
         )
         flash(Markup(f"copy below link and add it as a url for an image in the body of your email:<br/> {open_tracking_url}"), 'success')
     return render_template('tracker.html', actNav='tracker', form=form, title='Tracker')
 
+@app.route("/trck/link_status")
+@login_required
+def link_status():
+    links = LinkStatus.objects(sender = current_user).only('link_id', 'subject', 'receiver', 'tags', 'status')
+    return render_template('link_status.html', actNav='link_status', data=links)
+
 @app.route("/trck/img/<hstr>")
 def img(hstr):
-    full_url = tracking_url+hstr
     try:
         tracking_result = pytracking.get_open_tracking_result(
-        full_url, base_open_tracking_url=tracking_url, encryption_bytestring_key=app.config['TRACK_KEY'])
+        request.url, base_open_tracking_url=request.host_url, encryption_bytestring_key=app.config['TRACK_KEY'])
     except Exception as e:
         return abort(404) 
 
