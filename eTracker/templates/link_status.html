@@ -7,7 +7,7 @@
 {% for l in data %}
     <div class="d-style btn btn-brc-tp border-2 bgc-white btn-outline-blue btn-h-outline-blue btn-a-outline-blue w-100 my-2 py-3 shadow-sm">
         <!-- Basic Plan -->
-        <div class="col-md-12">
+        <div class="row col-md-12">
             <p class="f-n-hover btn btn-raised  text-600">To:</p>
             <p class="f-n-hover btn btn-info btn-raised  text-600">{{ l["receiver"] }}</p>
             <p class="f-n-hover btn btn-raised  text-600">Subject:</p>
@@ -19,18 +19,20 @@
                 <p class="f-n-hover btn btn-danger btn-raised text-600">{{ t }}</p>
             {% endfor %}
         </div>
-        <div class="row align-items-center col-md-12">
-            <ul class="list-unstyled mb-0 col-12 col-md-4 text-dark-l1 text-90 text-left my-4 my-md-0">
+        <div class="col-md-12 align-items-center">
+            <ul class="list-unstyled mb-0 text-dark-l1 text-90 text-left my-4 my-md-0">
                 {% for i, s in l["status"].items() %}
-                <li class="mt-25">
+                <li class="row">
                     <i class="fa fa-check text-success-m2 text-110 mr-2 mt-1">
                         # {{ i }}
                     </i>
-                    <p class="btn btn-light text-600">{{ s["timestamp_utc"] }}</p>
-                    <p class="btn btn-dark text-600">{{ s["os"] }}</p>
-                    <p class="btn btn-secondary text-600">{{ s["ip"] }}</p>
+                    <p class="btn btn-secondary text-600">{{ s["timestamp_utc"] }}</p>  
+                    <p class="btn btn-light text-600">{{ s["os"] }}</p>
+                    <p class="btn btn-secondary text-600" onclick='copyToClip("{{ s.ip }}")'>
+                        {{ s["ip"] }}
+                    </p>
                     <p class="btn btn-light text-600">{{ s["browser"] }}<span class="text-danger">v</span>{{ s["v"] }}</p>
-                    <p class="btn btn-secondary text-600">{{ s["st"] }}</p>
+                    <p class="btn btn-outline-dark text-600">{{ s["st"] }}</p>
                     <p class="btn btn-outline-dark text-600">{{ s["lang"] }}</p>
                 </li>
                 {% endfor %}
@@ -38,6 +40,12 @@
         </div>    
     </div>
 {% endfor %}
+<script>
+    function copyToClip(ipVal) {
+        navigator.clipboard.writeText(ipVal);
+        // alert("Copied the text: " + ipVal);
+    }
+</script>
 <br><br>
 
 {% endblock %}
