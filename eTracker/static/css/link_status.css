@@ -16,6 +16,7 @@
     z-index: auto;
     border-radius: .175rem;
     transition: color .15s,background-color .15s,border-color .15s,box-shadow .15s,opacity .15s;
+    margin-right: 2px;
 }
 .border-2 {
     border-width: 2px!important;
