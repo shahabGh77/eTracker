@@ -1,6 +1,7 @@
 from flask import request, url_for, redirect
 from urllib.parse import urlparse, urljoin
 from datetime import datetime
+import pytz
 
 def is_safe_url(target):
     ref_url = urlparse(request.host_url)
@@ -30,7 +31,7 @@ def getIpAdrr():
 
 def logInf():
     return {
-        'timestamp_utc': datetime.utcnow().timestamp(),
+        'timestamp_utc': datetime.utcnow().replace(tzinfo=pytz.UTC).strftime("%Y-%m-%d %H:%M:%S %Z"),
         'ip': getIpAdrr(),
         'os': request.user_agent.platform,
         'browser': request.user_agent.browser,
