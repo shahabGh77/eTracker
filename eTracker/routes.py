@@ -4,11 +4,15 @@ from flask import request, jsonify, render_template, flash, redirect, url_for, s
 from flask_login import login_required, login_user, logout_user, current_user
 from eTracker.models import User, LinkStatus
 from eTracker.forms import LoginForm, RegisterForm, TrackerForm, LogoutForm
+from urllib.parse import unquote
 from .util import is_safe_url, logInf
 
 import pytracking
 import io
 
+
+def getBaseUrl():
+    return request.host_url + url_for('img', hstr="")[1:]
 
 
 @login_manager.user_loader
@@ -91,7 +95,7 @@ def tracker():
         )
         s.save()
         open_tracking_url = pytracking.get_open_tracking_url(
-            {"LID": s.link_id}, base_open_tracking_url=request.host_url + url_for('img', hstr=""),
+            {"LID": s.link_id}, base_open_tracking_url=getBaseUrl(),
             encryption_bytestring_key=app.config['TRACK_KEY']
         )
         flash(Markup(f"copy below link and add it as a url for an image in the body of your email:<br/> {open_tracking_url}"), 'success')
@@ -107,7 +111,7 @@ def link_status():
 def img(hstr):
     try:
         tracking_result = pytracking.get_open_tracking_result(
-        request.url, base_open_tracking_url=request.host_url, encryption_bytestring_key=app.config['TRACK_KEY'])
+        unquote(request.url), base_open_tracking_url=getBaseUrl(), encryption_bytestring_key=app.config['TRACK_KEY'])
     except Exception as e:
         return abort(404) 
 
