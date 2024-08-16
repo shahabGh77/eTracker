@@ -31,7 +31,7 @@ def getIpAdrr():
 
 def logInf():
     return {
-        'timestamp_utc': datetime.utcnow().replace(tzinfo=pytz.UTC).strftime("%Y-%m-%d %H:%M:%S %Z"),
+        'timestamp_utc': datetime.utcnow().replace(tzinfo=pytz.UTC),
         'ip': getIpAdrr(),
         'os': request.user_agent.platform,
         'browser': request.user_agent.browser,

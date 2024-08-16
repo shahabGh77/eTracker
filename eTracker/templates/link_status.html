@@ -16,7 +16,7 @@
             <p class="f-n-hover btn btn-success btn-raised text-600">#{{ l["status"]|length }}</p>
             <p class="f-n-hover btn btn-raised  text-600">Tags:</p>
             {% for t in l["tags"] %}
-                <p class="f-n-hover btn btn-danger btn-raised text-600">{{ t }}</p>
+                <p class="f-n-hover btn btn-danger btn-raised text-600">{{ t.name }}</p>
             {% endfor %}
         </div>
         <div class="col-md-12 align-items-center">
@@ -32,9 +32,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for i, s in l["status"].items() %}
+                    {% for s in l["status"] %}
                     <tr>
-                        <td scope='row'>{{ i }}</td>
+                        <td scope='row'>{{ s["status_id"] }}</td>
                         <td>{{ s["timestamp_utc"] }}</td>
                         <td>{{ s["os"] }}</td>
                         <td>{{ s["ip"] }}</td>
